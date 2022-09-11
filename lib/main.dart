@@ -121,6 +121,7 @@ class _RandomWordsState extends State<RandomWords> {
 
   final _suggestions = <WordPair>[];
   final _biggerFront = const TextStyle(fontSize: 18);
+  final _saved = <WordPair>{};
 
   @override
   Widget build(BuildContext context) {
@@ -134,9 +135,16 @@ class _RandomWordsState extends State<RandomWords> {
             _suggestions.addAll(generateWordPairs().take(10));
           }
 
+          final alreadySaved = _saved.contains(_suggestions[index]);
+
           return ListTile(
             title: Text(_suggestions[index].asPascalCase,
             style: _biggerFront,
+            ),
+            trailing: Icon(
+              alreadySaved ? Icons.favorite : Icons.favorite_border,
+              color: alreadySaved ? Colors.red : null,
+              semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
             ),
           );
         });
